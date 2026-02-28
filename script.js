@@ -63,37 +63,45 @@ const modal = document.getElementById('instructionsModal');
 const instructionsBtn = document.getElementById('instructionsBtn');
 const closeBtn = document.querySelector('.close');
 
-instructionsBtn.addEventListener('click', () => {
-  modal.classList.add('show');
-});
+if (instructionsBtn && modal && closeBtn) {
+  instructionsBtn.addEventListener('click', () => {
+    modal.classList.add('show');
+  });
 
-closeBtn.addEventListener('click', () => {
-  modal.classList.remove('show');
-});
-
-window.addEventListener('click', (event) => {
-  if (event.target === modal) {
+  closeBtn.addEventListener('click', () => {
     modal.classList.remove('show');
-  }
-});
+  });
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.classList.remove('show');
+    }
+  });
+}
 
 // ============================================
 // LANDING PAGE - START DEMO BUTTON
 // ============================================
 
-document.getElementById('startDemoBtn').addEventListener('click', () => {
-  showPage('ivr');
-  initializeIVRSession();
-});
+const startDemoBtn = document.getElementById('startDemoBtn');
+if (startDemoBtn) {
+  startDemoBtn.addEventListener('click', () => {
+    showPage('ivr');
+    initializeIVRSession();
+  });
+}
 
 // ============================================
 // IVR PAGE - BACK BUTTON
 // ============================================
 
-document.getElementById('backBtn').addEventListener('click', () => {
-  showPage('landing');
-  resetIVRSession();
-});
+const backBtn = document.getElementById('backBtn');
+if (backBtn) {
+  backBtn.addEventListener('click', () => {
+    showPage('landing');
+    resetIVRSession();
+  });
+}
 
 // ============================================
 // IVR SESSION MANAGEMENT
@@ -101,6 +109,8 @@ document.getElementById('backBtn').addEventListener('click', () => {
 
 function initializeIVRSession() {
   const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
+  
   chatMessages.innerHTML = '';
   state.conversationStarted = true;
   state.userInputHistory = [];
@@ -125,7 +135,10 @@ function resetIVRSession() {
   state.conversationStarted = false;
   state.userInputHistory = [];
   state.ivrStage = 'initial';
-  document.getElementById('chatMessages').innerHTML = '';
+  const chatMessages = document.getElementById('chatMessages');
+  if (chatMessages) {
+    chatMessages.innerHTML = '';
+  }
   updatePhoneDisplay('');
 }
 
@@ -135,6 +148,7 @@ function resetIVRSession() {
 
 function addMessage(sender, text) {
   const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
   
   const messageDiv = document.createElement('div');
   messageDiv.className = `message ${sender}`;
@@ -151,8 +165,13 @@ function addMessage(sender, text) {
   messageDiv.appendChild(timeDiv);
   chatMessages.appendChild(messageDiv);
 
-  // Auto-scroll to bottom
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  // Auto-scroll to bottom by scrolling the parent container
+  const chatContainer = chatMessages.parentElement;
+  if (chatContainer) {
+    setTimeout(() => {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }, 0);
+  }
 }
 
 // ============================================
@@ -161,7 +180,7 @@ function addMessage(sender, text) {
 
 document.querySelectorAll('.dial-btn').forEach(btn => {
   btn.addEventListener('click', (event) => {
-    handleDialPadInput(event.target.dataset.key);
+    handleDialPadInput(event.target.closest('.dial-btn').dataset.key);
   });
 });
 
@@ -268,12 +287,22 @@ async function handleDialPadInput(key) {
 
 function updatePhoneDisplay(value) {
   const display = document.getElementById('phoneDisplay');
+  if (!display) return;
+  
+  const displayContent = display.querySelector('.display-content');
+  const displayText = displayContent?.querySelector('.display-text');
+  
+  if (!displayText) return;
+  
   if (!value) {
-    display.innerText = 'Ready';
+    displayText.innerText = 'Krishi AI';
+    displayContent.querySelector('.display-status').innerText = 'Ready';
   } else if (value === '#') {
-    display.innerText = 'Call Ended';
+    displayText.innerText = 'Call Ended';
+    displayContent.querySelector('.display-status').innerText = '';
   } else if (state.userInputHistory.includes('#')) {
-    display.innerText = 'Call Ended';
+    displayText.innerText = 'Call Ended';
+    displayContent.querySelector('.display-status').innerText = '';
   } else {
     display.innerText = `Input: ${value}`;
   }
@@ -357,4 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Ensure landing page is visible on load
   showPage('landing');
+
+  // Initialize carousel
+  initializeCarousel();
 });

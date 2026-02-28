@@ -3,109 +3,274 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Krishi AI - Agricultural IVR System</title>
+  <title>Krishi AI - AI for Every Farmer, No Smartphone Required</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <!-- PAGE 1: LANDING PAGE -->
 <div id="landingPage" class="page active">
-  <!-- Background Slideshow -->
-  <div class="background-slideshow" id="backgroundSlideshow"></div>
-  <div class="overlay"></div>
+  <!-- Background Video -->
+  <div class="video-background">
+    <!-- agriculture-themed video background (remote source) -->
+    <video autoplay muted loop playsinline class="background-video">
+      <source src="https://cdn.videvo.net/videvo_files/video/free/2017-10/large_watermarked/170919_41_FarmB_UHD_50p_002_preview.mp4" type="video/mp4">
+      <!-- fallback image for browsers that cannot play the video -->
+    </video>
+    <div class="video-overlay"></div>
+  </div>
 
-  <!-- Header -->
-  <header class="header">
-    <h1 class="title-glow">Krishi</h1>
-  </header>
-
-  <!-- Main Content -->
-  <main class="landing-content">
-    <section class="introduction">
-      <h2>Welcome to Krishi AI</h2>
-      <p>
-        Krishi is an <strong>AI-powered multilingual IVR system</strong> designed for farmers who prefer voice-based guidance over smartphones. 
-        Farmers can simply call and receive <strong>real-time agricultural assistance</strong> including crop advice, weather updates, market prices, 
-        and fertilizer guidance. Our voice-based system breaks language and literacy barriers, bringing intelligent agricultural support directly through a phone call.
-      </p>
-    </section>
-
-    <!-- Buttons -->
-    <div class="button-group">
-      <button class="btn btn-primary" id="startDemoBtn">🚀 Start Demo</button>
-      <button class="btn btn-outline" id="instructionsBtn">ℹ️ Instructions</button>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-landing">
+    <div class="nav-container">
+      <div class="logo-container">
+        <span class="logo-icon">🌾</span>
+        <h1 class="logo-text">Krishi AI</h1>
+      </div>
+      <div class="nav-right">
+        <div class="nav-tagline">AI for Every Farmer</div>
+        <a href="tel:18001234567" class="toll-free-number">📞 1800-123-4567</a>
+      </div>
     </div>
-  </main>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h2 class="hero-title">Krishi AI – AI Assistance for Every Farmer</h2>
+      <p class="hero-subtitle">
+        Access agricultural intelligence through any phone, even basic keypad devices.
+      </p>
+      <button class="btn btn-primary btn-large btn-hero" id="startDemoBtn">Start IVR Call Demo</button>
+    </div>
+  </section>
+
+  <!-- Features Carousel Section -->
+  <section class="features-section">
+    <div class="features-container">
+      <h3 class="features-title">Agricultural Guidance at Your Fingertips</h3>
+      
+      <div class="carousel-wrapper">
+        <button class="carousel-nav carousel-prev" id="carouselPrev" aria-label="Previous features">
+          <span>❮</span>
+        </button>
+
+        <div class="carousel-viewport">
+          <div class="features-carousel" id="featuresCarousel">
+            <div class="feature-card">
+              <div class="feature-icon">🌾</div>
+              <h4>Crop Advisory</h4>
+              <p>Expert guidance for rice, wheat, maize, and other crops tailored to your region</p>
+              <div class="card-accent"></div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">⛅</div>
+              <h4>Weather Alerts</h4>
+              <p>Real-time weather forecasts to plan your farming activities effectively</p>
+              <div class="card-accent"></div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">💹</div>
+              <h4>Market Prices</h4>
+              <p>Daily market rates for crops in nearby mandis to maximize your profits</p>
+              <div class="card-accent"></div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🏛️</div>
+              <h4>Government Schemes</h4>
+              <p>Information about subsidies, crop insurance, and farmer support programs</p>
+              <div class="card-accent"></div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">💧</div>
+              <h4>Irrigation Tips</h4>
+              <p>Optimal watering schedules and techniques for water-efficient farming</p>
+              <div class="card-accent"></div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🐛</div>
+              <h4>Pest Management</h4>
+              <p>Eco-friendly solutions for common crop pests and diseases</p>
+              <div class="card-accent"></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-nav carousel-next" id="carouselNext" aria-label="Next features">
+          <span>❯</span>
+        </button>
+      </div>
+
+      <div class="carousel-indicators" id="carouselIndicators"></div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="how-container">
+      <h3 class="how-title">How It Works</h3>
+      <div class="steps-container">
+        <div class="step-box">
+          <div class="step-number">1</div>
+          <div class="step-title">Make a Call</div>
+          <p>Dial Krishi AI's number from any basic phone</p>
+        </div>
+        <div class="step-divider">→</div>
+        <div class="step-box">
+          <div class="step-number">2</div>
+          <div class="step-title">Select Language</div>
+          <p>Choose Hindi, English, or Malayalam</p>
+        </div>
+        <div class="step-divider">→</div>
+        <div class="step-box">
+          <div class="step-number">3</div>
+          <div class="step-title">Press Keys</div>
+          <p>Use your phone's keypad to navigate</p>
+        </div>
+        <div class="step-divider">→</div>
+        <div class="step-box">
+          <div class="step-number">4</div>
+          <div class="step-title">Get Guidance</div>
+          <p>Listen to AI responses in your language</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accessibility Statement -->
+  <section class="accessibility-statement">
+    <div class="accessibility-content">
+      <h3>Digital Inclusion for Rural Farmers</h3>
+      <p>Krishi AI proves that advanced AI technology doesn't require expensive smartphones or fast internet. Our system works on the most basic feature phones, making agricultural innovation accessible to every farmer, regardless of their technology access.</p>
+    </div>
+  </section>
 
   <!-- Instructions Modal -->
   <div id="instructionsModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
       <h2>How Krishi AI IVR Works</h2>
-      <ul>
-        <li><strong>Interactive Demo:</strong> This is a live simulation of our IVR system.</li>
-        <li><strong>Phone Keypad:</strong> Click on dial pad numbers (0-9, *, #) to simulate a farmer pressing buttons on their phone.</li>
-        <li><strong>AI Responses:</strong> The Krishi AI bot responds intelligently to each selection.</li>
-        <li><strong>Chat Interface:</strong> Watch the conversation flow in real-time like a phone call conversation.</li>
-        <li><strong>Multiple Languages:</strong> The system supports Hindi, English, and Malayalam.</li>
-        <li><strong>Voice-Based:</strong> All responses are spoken aloud via text-to-speech (TTS) technology.</li>
-      </ul>
-      <p><strong>Ready to try?</strong> Click "Start Demo" to begin the interactive IVR simulation!</p>
+      <p><strong>This is an interactive simulation of our real IVR system.</strong></p>
+      
+      <h4 style="margin-top: 20px;">📞 Phone Keypad Interaction</h4>
+      <p>Click on dial pad numbers (0-9, *, #) to simulate pressing buttons on your phone.</p>
+      
+      <h4>🤖 AI Responses</h4>
+      <p>The Krishi AI bot responds intelligently to each selection with real agricultural guidance.</p>
+      
+      <h4>💬 Real-Time Conversation</h4>
+      <p>Watch the conversation flow like an actual phone call with voice responses.</p>
+      
+      <h4>🌐 Multilingual Support</h4>
+      <p>The system supports Hindi, English, and Malayalam for accessibility.</p>
+      
+      <h4>🔊 Voice-Based Assistance</h4>
+      <p>All responses are spoken aloud using text-to-speech (TTS) technology, just like a real phone call.</p>
+      
+      <h4 style="margin-top: 20px;">🎯 Ready to Try?</h4>
+      <p><strong>Click "Start IVR Call Demo" to begin the interactive simulation!</strong> Use the keypad at the bottom of the screen to navigate through the menu, just like on a real phone call.</p>
     </div>
   </div>
 </div>
 
 <!-- PAGE 2: IVR SIMULATION PAGE -->
 <div id="ivrPage" class="page">
-  <!-- Top Bar -->
-  <div class="ivr-top-bar">
-    <div class="ivr-info-left">
-      <div class="ai-icon">🤖</div>
-      <span class="ai-name">Krishi AI Assistant</span>
-    </div>
-    <div class="ivr-info-right">
-      <div class="status-indicator online"></div>
-      <span class="status-text">Live IVR Simulation</span>
-    </div>
+  <!-- Background with blurred farm imagery -->
+  <div class="ivr-background">
+    <div class="ivr-bg-blur"></div>
   </div>
 
-  <!-- Chat Area -->
-  <div class="ivr-chat-container">
-    <div class="chat-messages" id="chatMessages">
-      <!-- Messages will be dynamically added here -->
-    </div>
+  <!-- Header with Back Button -->
+  <div class="ivr-header">
+    <button class="btn-back-simple" id="backBtn">← Back to Home</button>
+    <h2 class="ivr-title">Krishi AI - IVR Simulation</h2>
   </div>
 
-  <!-- Phone Dial Pad -->
-  <div class="phone-container">
-    <div class="phone-display" id="phoneDisplay">Ready</div>
-    
-    <div class="dial-pad">
-      <div class="dial-row">
-        <button class="dial-btn" data-key="1">1</button>
-        <button class="dial-btn" data-key="2">2</button>
-        <button class="dial-btn" data-key="3">3</button>
+  <!-- Main Container -->
+  <div class="ivr-main-container">
+    <!-- Left Section: Chat Console -->
+    <div class="ivr-chat-section">
+      <div class="chat-header">
+        <span class="chat-label">📞 IVR Conversation</span>
+        <div class="call-status">
+          <span class="status-dot"></span>
+          <span class="status-text">Connected</span>
+        </div>
       </div>
-      <div class="dial-row">
-        <button class="dial-btn" data-key="4">4</button>
-        <button class="dial-btn" data-key="5">5</button>
-        <button class="dial-btn" data-key="6">6</button>
-      </div>
-      <div class="dial-row">
-        <button class="dial-btn" data-key="7">7</button>
-        <button class="dial-btn" data-key="8">8</button>
-        <button class="dial-btn" data-key="9">9</button>
-      </div>
-      <div class="dial-row">
-        <button class="dial-btn" data-key="*">*</button>
-        <button class="dial-btn" data-key="0">0</button>
-        <button class="dial-btn" data-key="#">#</button>
+      <div class="ivr-chat-container">
+        <div class="chat-messages" id="chatMessages">
+          <!-- Messages will be dynamically added here -->
+        </div>
       </div>
     </div>
 
-    <!-- Control Buttons -->
-    <div class="control-buttons">
-      <button class="btn btn-back" id="backBtn">← Back to Home</button>
+    <!-- Right Section: Feature Phone -->
+    <div class="phone-wrapper">
+      <div class="phone-body">
+        <!-- Phone Top Bezel -->
+        <div class="phone-bezel-top">
+          <div class="phone-speaker"></div>
+        </div>
+
+        <!-- LCD Display -->
+        <div class="phone-display-area">
+          <div class="phone-display-screen" id="phoneDisplay">
+            <div class="display-content">
+              <p class="display-text">Krishi AI</p>
+              <p class="display-status">Ready</p>
+            </div>
+          </div>
+          <div class="display-calltime">
+            <span id="callTime">00:00</span>
+          </div>
+        </div>
+
+        <!-- Phone Keypad Section -->
+        <div class="phone-keypad-section">
+          <!-- Dial Pad -->
+          <div class="dial-pad">
+            <div class="dial-row">
+              <button class="dial-btn" data-key="1"><span class="btn-number">1</span></button>
+              <button class="dial-btn" data-key="2"><span class="btn-number">2</span></button>
+              <button class="dial-btn" data-key="3"><span class="btn-number">3</span></button>
+            </div>
+            <div class="dial-row">
+              <button class="dial-btn" data-key="4"><span class="btn-number">4</span></button>
+              <button class="dial-btn" data-key="5"><span class="btn-number">5</span></button>
+              <button class="dial-btn" data-key="6"><span class="btn-number">6</span></button>
+            </div>
+            <div class="dial-row">
+              <button class="dial-btn" data-key="7"><span class="btn-number">7</span></button>
+              <button class="dial-btn" data-key="8"><span class="btn-number">8</span></button>
+              <button class="dial-btn" data-key="9"><span class="btn-number">9</span></button>
+            </div>
+            <div class="dial-row">
+              <button class="dial-btn dial-special" data-key="*"><span class="btn-number">*</span></button>
+              <button class="dial-btn" data-key="0"><span class="btn-number">0</span></button>
+              <button class="dial-btn dial-special" data-key="#"><span class="btn-number">#</span></button>
+            </div>
+          </div>
+
+          <!-- Function Buttons -->
+          <div class="control-buttons-phone">
+            <button class="control-btn call-btn" title="Call"> 
+              <span>📞</span>
+            </button>
+            <button class="control-btn back-btn" title="Back">
+              <span>⬅</span>
+            </button>
+            <button class="control-btn end-btn" title="End Call">
+              <span>⏹</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Phone Bottom Bezel -->
+        <div class="phone-bezel-bottom">
+          <div class="phone-brand">Feature Phone</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
