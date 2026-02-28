@@ -15,7 +15,7 @@ const state = {
 };
 
 // ============================================
-// AI RESPONSE LOGIC
+// AI RESPONSE LOGIC 
 // ============================================
 
 const aiResponses = {
