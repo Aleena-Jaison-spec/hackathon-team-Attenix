@@ -11,8 +11,110 @@ const state = {
   conversationStarted: false,
   currentInputValue: '',
   userInputHistory: [],
-  ivrStage: 'initial'
+  ivrStage: 'initial',
+  carouselIndex: 0,
+  carouselAutoScroll: null
 };
+
+// ============================================
+// CAROUSEL FUNCTIONALITY
+// ============================================
+
+function initializeCarousel() {
+  const carousel = document.getElementById('featuresCarousel');
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
+  const indicatorsContainer = document.getElementById('carouselIndicators');
+
+  if (!carousel) return;
+
+  const cards = carousel.querySelectorAll('.feature-card');
+  const totalCards = cards.length;
+  const visibleCards = 3;
+  const cardWidth = 100 / visibleCards;
+
+  // Create indicator dots
+  for (let i = 0; i < Math.ceil(totalCards / visibleCards); i++) {
+    const dot = document.createElement('div');
+    dot.className = `indicator-dot ${i === 0 ? 'active' : ''}`;
+    dot.addEventListener('click', () => scrollToIndex(i * visibleCards));
+    indicatorsContainer.appendChild(dot);
+  }
+
+  function updateCarousel() {
+    const scrollAmount = (state.carouselIndex / visibleCards) * 100;
+    carousel.style.transform = `translateX(-${scrollAmount}%)`;
+
+    // Update indicator dots
+    const indicatorIndex = Math.floor(state.carouselIndex / visibleCards);
+    document.querySelectorAll('.indicator-dot').forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === indicatorIndex);
+    });
+  }
+
+  function scrollToIndex(index) {
+    state.carouselIndex = Math.max(0, Math.min(index, totalCards - visibleCards));
+    updateCarousel();
+    resetAutoScroll();
+  }
+
+  function nextSlide() {
+    if (state.carouselIndex < totalCards - visibleCards) {
+      state.carouselIndex++;
+      updateCarousel();
+      resetAutoScroll();
+    }
+  }
+
+  function prevSlide() {
+    if (state.carouselIndex > 0) {
+      state.carouselIndex--;
+      updateCarousel();
+      resetAutoScroll();
+    }
+  }
+
+  function resetAutoScroll() {
+    if (state.carouselAutoScroll) {
+      clearInterval(state.carouselAutoScroll);
+    }
+    startAutoScroll();
+  }
+
+  function startAutoScroll() {
+    state.carouselAutoScroll = setInterval(() => {
+      if (state.carouselIndex < totalCards - visibleCards) {
+        state.carouselIndex++;
+      } else {
+        state.carouselIndex = 0;
+      }
+      updateCarousel();
+    }, 5000);
+  }
+
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (state.currentPage === 'landing') {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+    }
+  });
+
+  // Start auto-scroll
+  startAutoScroll();
+
+  // Stop auto-scroll on hover
+  carousel.addEventListener('mouseenter', () => {
+    if (state.carouselAutoScroll) {
+      clearInterval(state.carouselAutoScroll);
+    }
+  });
+
+  carousel.addEventListener('mouseleave', startAutoScroll);
+}
 
 // ============================================
 // AI RESPONSE LOGIC
@@ -62,37 +164,45 @@ const modal = document.getElementById('instructionsModal');
 const instructionsBtn = document.getElementById('instructionsBtn');
 const closeBtn = document.querySelector('.close');
 
-instructionsBtn.addEventListener('click', () => {
-  modal.classList.add('show');
-});
+if (instructionsBtn && modal && closeBtn) {
+  instructionsBtn.addEventListener('click', () => {
+    modal.classList.add('show');
+  });
 
-closeBtn.addEventListener('click', () => {
-  modal.classList.remove('show');
-});
-
-window.addEventListener('click', (event) => {
-  if (event.target === modal) {
+  closeBtn.addEventListener('click', () => {
     modal.classList.remove('show');
-  }
-});
+  });
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.classList.remove('show');
+    }
+  });
+}
 
 // ============================================
 // LANDING PAGE - START DEMO BUTTON
 // ============================================
 
-document.getElementById('startDemoBtn').addEventListener('click', () => {
-  showPage('ivr');
-  initializeIVRSession();
-});
+const startDemoBtn = document.getElementById('startDemoBtn');
+if (startDemoBtn) {
+  startDemoBtn.addEventListener('click', () => {
+    showPage('ivr');
+    initializeIVRSession();
+  });
+}
 
 // ============================================
 // IVR PAGE - BACK BUTTON
 // ============================================
 
-document.getElementById('backBtn').addEventListener('click', () => {
-  showPage('landing');
-  resetIVRSession();
-});
+const backBtn = document.getElementById('backBtn');
+if (backBtn) {
+  backBtn.addEventListener('click', () => {
+    showPage('landing');
+    resetIVRSession();
+  });
+}
 
 // ============================================
 // IVR SESSION MANAGEMENT
@@ -100,6 +210,8 @@ document.getElementById('backBtn').addEventListener('click', () => {
 
 function initializeIVRSession() {
   const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
+  
   chatMessages.innerHTML = '';
   state.conversationStarted = true;
   state.userInputHistory = [];
@@ -117,7 +229,10 @@ function resetIVRSession() {
   state.conversationStarted = false;
   state.userInputHistory = [];
   state.ivrStage = 'initial';
-  document.getElementById('chatMessages').innerHTML = '';
+  const chatMessages = document.getElementById('chatMessages');
+  if (chatMessages) {
+    chatMessages.innerHTML = '';
+  }
   updatePhoneDisplay('');
 }
 
@@ -127,6 +242,7 @@ function resetIVRSession() {
 
 function addMessage(sender, text) {
   const chatMessages = document.getElementById('chatMessages');
+  if (!chatMessages) return;
   
   const messageDiv = document.createElement('div');
   messageDiv.className = `message ${sender}`;
@@ -153,7 +269,7 @@ function addMessage(sender, text) {
 
 document.querySelectorAll('.dial-btn').forEach(btn => {
   btn.addEventListener('click', (event) => {
-    handleDialPadInput(event.target.dataset.key);
+    handleDialPadInput(event.target.closest('.dial-btn').dataset.key);
   });
 });
 
@@ -190,14 +306,25 @@ function handleDialPadInput(key) {
 
 function updatePhoneDisplay(value) {
   const display = document.getElementById('phoneDisplay');
+  if (!display) return;
+  
+  const displayContent = display.querySelector('.display-content');
+  const displayText = displayContent?.querySelector('.display-text');
+  
+  if (!displayText) return;
+  
   if (!value) {
-    display.innerText = 'Ready';
+    displayText.innerText = 'Krishi AI';
+    displayContent.querySelector('.display-status').innerText = 'Ready';
   } else if (value === '#') {
-    display.innerText = 'Call Ended';
+    displayText.innerText = 'Call Ended';
+    displayContent.querySelector('.display-status').innerText = '';
   } else if (state.userInputHistory.includes('#')) {
-    display.innerText = 'Call Ended';
+    displayText.innerText = 'Call Ended';
+    displayContent.querySelector('.display-status').innerText = '';
   } else {
-    display.innerText = `Input: ${value}`;
+    displayText.innerText = `Input: ${value}`;
+    displayContent.querySelector('.display-status').innerText = 'Processing...';
   }
 }
 
@@ -228,4 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Ensure landing page is visible on load
   showPage('landing');
+
+  // Initialize carousel
+  initializeCarousel();
 });
