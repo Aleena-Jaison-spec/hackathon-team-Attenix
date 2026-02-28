@@ -10,32 +10,78 @@
 
 <!-- PAGE 1: LANDING PAGE -->
 <div id="landingPage" class="page active">
-  <!-- Background Slideshow -->
-  <div class="background-slideshow" id="backgroundSlideshow"></div>
-  <div class="overlay"></div>
-
-  <!-- Header -->
-  <header class="header">
+  
+  <!-- Hero Header -->
+  <header class="hero-header">
     <h1 class="title-glow">Krishi</h1>
+    <p class="header-subtitle">AI-Powered Agricultural IVR System</p>
   </header>
 
-  <!-- Main Content -->
-  <main class="landing-content">
-    <section class="introduction">
-      <h2>Welcome to Krishi AI</h2>
-      <p>
-        Krishi is an <strong>AI-powered multilingual IVR system</strong> designed for farmers who prefer voice-based guidance over smartphones. 
-        Farmers can simply call and receive <strong>real-time agricultural assistance</strong> including crop advice, weather updates, market prices, 
-        and fertilizer guidance. Our voice-based system breaks language and literacy barriers, bringing intelligent agricultural support directly through a phone call.
-      </p>
-    </section>
+  <!-- Section 1: Demo Rectangle with Video/Slideshow -->
+  <section class="demo-section">
+    <div class="demo-container">
+      <!-- Video/Image Slideshow -->
+      <div class="demo-media">
+        <video id="demoVideo" class="demo-video" autoplay muted loop>
+          <source src="https://placeholder-video.com/agriculture-demo.mp4" type="video/mp4">
+          <!-- Fallback to image slideshow if video fails -->
+        </video>
+        <div class="demo-slideshow" id="demoSlideshow"></div>
+        <div class="demo-overlay"></div>
+      </div>
 
-    <!-- Buttons -->
-    <div class="button-group">
-      <button class="btn btn-primary" id="startDemoBtn">🚀 Start Demo</button>
-      <button class="btn btn-outline" id="instructionsBtn">ℹ️ Instructions</button>
+      <!-- Left Side Intro Panel -->
+      <div class="intro-panel">
+        <div class="intro-card">
+          <h2>Introducing Krishi</h2>
+          <p>
+            <strong>AI-powered multilingual IVR system</strong> designed for farmers who depend on voice-based assistance. 
+            Works without smartphones • Real-time agricultural support • Breaking language barriers
+          </p>
+          <button class="btn btn-know-more" id="knowMoreBtn">Know More</button>
+        </div>
+      </div>
     </div>
-  </main>
+  </section>
+
+  <!-- Section 2: Information Section -->
+  <section class="info-section" id="infoSection">
+    <div class="info-container">
+      <h2>How Krishi IVR Works</h2>
+      
+      <div class="info-content">
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <h3>Simple Phone Call</h3>
+          <p>Farmers simply dial the Krishi number from any phone - no app needed.</p>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">🔢</div>
+          <h3>Press Keypad Numbers</h3>
+          <p>Navigate the menu by pressing numbers 1-9 on the phone keypad.</p>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">🤖</div>
+          <h3>Instant AI Response</h3>
+          <p>Get immediate agricultural guidance, weather updates, and market prices.</p>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">🌾</div>
+          <h3>Real-Time Support</h3>
+          <p>24/7 intelligent assistance on crop advice, irrigation, pest control, and more.</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="button-group">
+        <button class="btn btn-primary" id="startDemoBtn">🚀 Start Demo</button>
+        <button class="btn btn-outline-dark" id="instructionsBtn">ℹ️ Instructions</button>
+      </div>
+    </div>
+  </section>
 
   <!-- Instructions Modal -->
   <div id="instructionsModal" class="modal">
@@ -53,6 +99,11 @@
       <p><strong>Ready to try?</strong> Click "Start Demo" to begin the interactive IVR simulation!</p>
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <p>Krishi – AI Powered Agricultural IVR System</p>
+  </footer>
 </div>
 
 <!-- PAGE 2: IVR SIMULATION PAGE -->
