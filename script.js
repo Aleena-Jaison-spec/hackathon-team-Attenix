@@ -11,8 +11,21 @@ const state = {
   conversationStarted: false,
   currentInputValue: '',
   userInputHistory: [],
-  ivrStage: 'initial'
+  ivrStage: 'initial',
+  slideshowIndex: 0,
+  slideshowInterval: null
 };
+
+// ============================================
+// IMAGE SLIDESHOW DATA
+// ============================================
+
+const slideshowImages = [
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%232da65a;stop-opacity:1" /><stop offset="100%25" style="stop-color:%231b5e3e;stop-opacity:1" /></linearGradient></defs><rect fill="url(%23g1)" width="1200" height="600"/><circle cx="150" cy="150" r="80" fill="%2352b788" opacity="0.3"/><circle cx="1050" cy="450" r="120" fill="%23a8d5ba" opacity="0.2"/><path d="M 0 400 Q 300 300 600 400 T 1200 400 L 1200 600 L 0 600 Z" fill="%23c8e6c9" opacity="0.5"/></svg>',
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%231b5e3e;stop-opacity:1" /><stop offset="100%25" style="stop-color:%23267A3A;stop-opacity:1" /></linearGradient></defs><rect fill="url(%23g2)" width="1200" height="600"/><rect x="100" y="100" width="300" height="400" fill="%23A8D5BA" opacity="0.5"/><rect x="800" y="200" width="250" height="300" fill="%2352b788" opacity="0.4"/><circle cx="600" cy="300" r="100" fill="%23FFD54F" opacity="0.6"/></svg>',
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%2352b788;stop-opacity:1" /><stop offset="100%25" style="stop-color:%232da65a;stop-opacity:1" /></linearGradient></defs><rect fill="url(%23g3)" width="1200" height="600"/><path d="M 0 350 Q 300 250 600 350 T 1200 350 L 1200 600 L 0 600 Z" fill="%23a8d5ba" opacity="0.6"/><polygon points="300,200 500,400 100,400" fill="%23FFD54F" opacity="0.7"/><polygon points="900,150 1100,350 700,350" fill="%23FFA726" opacity="0.5"/></svg>',
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="p1" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="45" fill="none" stroke="%234CAF50" stroke-width="1" opacity="0.3"/></pattern><linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%25" style="stop-color:%23267A3A;stop-opacity:1" /><stop offset="100%25" style="stop-color:%231b5e3e;stop-opacity:1" /></linearGradient></defs><rect fill="url(%23g4)" width="1200" height="600"/><rect fill="url(%23p1)" width="1200" height="600"/><ellipse cx="200" cy="400" rx="150" ry="80" fill="%2334a853" opacity="0.4"/><ellipse cx="1000" cy="200" rx="200" ry="100" fill="%2381c784" opacity="0.3"/></svg>'
+];
 
 // ============================================
 // AI RESPONSE LOGIC
@@ -55,6 +68,52 @@ function showPage(pageName) {
 }
 
 // ============================================
+// IMAGE SLIDESHOW FUNCTIONALITY
+// ============================================
+
+function initializeSlideshow() {
+  const demoSlideshow = document.getElementById('demoSlideshow');
+  
+  // Create image elements
+  slideshowImages.forEach((imgSrc, index) => {
+    const img = document.createElement('img');
+    img.className = 'slideshow-image';
+    if (index === 0) img.classList.add('active');
+    img.src = imgSrc;
+    demoSlideshow.appendChild(img);
+  });
+
+  // Start slideshow
+  startSlideshow();
+}
+
+function startSlideshow() {
+  if (state.slideshowInterval) clearInterval(state.slideshowInterval);
+
+  state.slideshowInterval = setInterval(() => {
+    updateSlideshow();
+  }, 500); // Change every 0.5 seconds
+}
+
+function updateSlideshow() {
+  const images = document.querySelectorAll('.slideshow-image');
+  
+  // Remove active from current
+  images.forEach(img => img.classList.remove('active'));
+
+  // Move to next
+  state.slideshowIndex = (state.slideshowIndex + 1) % images.length;
+  images[state.slideshowIndex].classList.add('active');
+}
+
+function stopSlideshow() {
+  if (state.slideshowInterval) {
+    clearInterval(state.slideshowInterval);
+    state.slideshowInterval = null;
+  }
+}
+
+// ============================================
 // MODAL FUNCTIONALITY
 // ============================================
 
@@ -77,10 +136,22 @@ window.addEventListener('click', (event) => {
 });
 
 // ============================================
+// LANDING PAGE - KNOW MORE BUTTON (SMOOTH SCROLL)
+// ============================================
+
+document.getElementById('knowMoreBtn').addEventListener('click', () => {
+  const infoSection = document.getElementById('infoSection');
+  if (infoSection) {
+    infoSection.scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+// ============================================
 // LANDING PAGE - START DEMO BUTTON
 // ============================================
 
 document.getElementById('startDemoBtn').addEventListener('click', () => {
+  stopSlideshow();
   showPage('ivr');
   initializeIVRSession();
 });
@@ -92,6 +163,7 @@ document.getElementById('startDemoBtn').addEventListener('click', () => {
 document.getElementById('backBtn').addEventListener('click', () => {
   showPage('landing');
   resetIVRSession();
+  initializeSlideshow();
 });
 
 // ============================================
@@ -228,4 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Ensure landing page is visible on load
   showPage('landing');
+  
+  // Initialize slideshow
+  initializeSlideshow();
 });
