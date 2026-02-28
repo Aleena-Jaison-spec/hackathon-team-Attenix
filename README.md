@@ -129,8 +129,11 @@ http://localhost:8000
 ## 👥 Team Members
 
 Aleena Jaison
+
 Christeena Jiji
+
 Arjun Narayan P
+
 Mohammed Shamil
 
 ---
