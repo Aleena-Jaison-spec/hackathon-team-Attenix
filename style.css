@@ -1,31 +1,667 @@
+/* ============================================
+   KRISHI AI - MODERN AGRICULTURAL IVR SYSTEM
+   ============================================ */
+
+/* Root CSS Variables */
+:root {
+  --primary-green: #2da65a;
+  --dark-green: #1b5e3e;
+  --light-green: #a8d5ba;
+  --accent-green: #52b788;
+  --bg-light: #f0f9f0;
+  --text-dark: #1b1b1b;
+  --text-light: #ffffff;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  --transition: all 0.3s ease;
+}
+
+/* ============================================
+   GENERAL & LAYOUT
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  overflow: hidden;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #e6f2ff;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
-.phone {
-  background: white;
-  width: 350px;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+/* ============================================
+   PAGE STRUCTURE
+   ============================================ */
+
+.page {
+  width: 100%;
+  height: 100vh;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.page.active {
+  display: flex;
+  opacity: 1;
+  z-index: 10;
+}
+
+/* ============================================
+   PAGE 1: LANDING PAGE
+   ============================================ */
+
+#landingPage {
+  position: relative;
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+
+/* Background Slideshow */
+.background-slideshow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(135deg, #2da65a 0%, #1b5e3e 100%);
+  z-index: 1;
+  animation: slideshow 8s infinite;
+}
+
+@keyframes slideshow {
+  0% {
+    background-image: linear-gradient(135deg, rgba(45, 166, 90, 0.9), rgba(27, 94, 62, 0.9)),
+                      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="p1" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="45" fill="none" stroke="%234CAF50" stroke-width="1" opacity="0.3"/></pattern></defs><rect fill="%2352b788" width="1200" height="600"/><rect fill="url(%23p1)" width="1200" height="600"/><ellipse cx="200" cy="400" rx="150" ry="80" fill="%2334a853" opacity="0.4"/><ellipse cx="1000" cy="200" rx="200" ry="100" fill="%2381c784" opacity="0.3"/></svg>');
+  }
+  25% {
+    background-image: linear-gradient(135deg, rgba(45, 166, 90, 0.9), rgba(27, 94, 62, 0.9)),
+                      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%231b5e3e" width="1200" height="600"/><path d="M 0 400 Q 300 300 600 400 T 1200 400 L 1200 600 L 0 600 Z" fill="%232da65a" opacity="0.6"/><circle cx="300" cy="150" r="60" fill="%23FFD54F" opacity="0.8"/></svg>');
+  }
+  50% {
+    background-image: linear-gradient(135deg, rgba(45, 166, 90, 0.9), rgba(27, 94, 62, 0.9)),
+                      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23267A3A" width="1200" height="600"/><rect x="100" y="100" width="300" height="400" fill="%23A8D5BA" opacity="0.5"/><rect x="800" y="200" width="250" height="300" fill="%2352b788" opacity="0.4"/></svg>');
+  }
+  75% {
+    background-image: linear-gradient(135deg, rgba(45, 166, 90, 0.9), rgba(27, 94, 62, 0.9)),
+                      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="p2" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="50" y2="50" stroke="%234CAF50" stroke-width="1" opacity="0.2"/></pattern></defs><rect fill="%231b5e3e" width="1200" height="600"/><rect fill="url(%23p2)" width="1200" height="600"/><polygon points="200,500 400,250 600,500" fill="%232da65a" opacity="0.5"/></svg>');
+  }
+  100% {
+    background-image: linear-gradient(135deg, rgba(45, 166, 90, 0.9), rgba(27, 94, 62, 0.9)),
+                      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23267A3A" width="1200" height="600"/><circle cx="600" cy="300" r="200" fill="%2352b788" opacity="0.3"/><ellipse cx="100" cy="100" rx="100" ry="150" fill="%23A8D5BA" opacity="0.4"/></svg>');
+  }
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+/* Header */
+.header {
+  position: relative;
+  z-index: 3;
+  padding: 60px 20px 40px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(45, 166, 90, 0.3) 0%, rgba(45, 166, 90, 0) 100%);
+}
+
+.title-glow {
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--text-light);
+  letter-spacing: 3px;
+  text-shadow: 
+    0 0 20px rgba(45, 166, 90, 0.8),
+    0 0 40px rgba(45, 166, 90, 0.5),
+    0 0 60px rgba(45, 166, 90, 0.3);
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 20px rgba(45, 166, 90, 0.8),
+      0 0 40px rgba(45, 166, 90, 0.5),
+      0 0 60px rgba(45, 166, 90, 0.3);
+  }
+  50% {
+    text-shadow: 
+      0 0 30px rgba(45, 166, 90, 1),
+      0 0 60px rgba(45, 166, 90, 0.7),
+      0 0 90px rgba(45, 166, 90, 0.5);
+  }
+}
+
+/* Landing Content */
+.landing-content {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
   text-align: center;
 }
 
-#screen {
-  min-height: 120px;
-  margin-bottom: 20px;
-  font-size: 16px;
+.introduction {
+  max-width: 700px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+  animation: slideUp 0.8s ease;
 }
 
-.buttons button {
-  width: 80px;
-  height: 40px;
-  margin: 5px;
-  font-size: 18px;
+.introduction h2 {
+  font-size: 36px;
+  color: var(--primary-green);
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.introduction p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-dark);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 3;
+  animation: slideUp 0.8s ease 0.2s both;
+}
+
+.btn {
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
   cursor: pointer;
+  transition: var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-green) 100%);
+  color: var(--text-light);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(45, 166, 90, 0.4);
+  background: linear-gradient(135deg, var(--accent-green) 0%, var(--primary-green) 100%);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-light);
+  border: 2px solid var(--text-light);
+}
+
+.btn-outline:hover {
+  background: var(--text-light);
+  color: var(--primary-green);
+  transform: translateY(-3px);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.close:hover,
+.close:focus {
+  color: var(--primary-green);
+}
+
+.modal-content h2 {
+  color: var(--primary-green);
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.modal-content ul {
+  text-align: left;
+  margin: 20px 0;
+  list-style-position: inside;
+}
+
+.modal-content li {
+  margin: 15px 0;
+  line-height: 1.6;
+}
+
+.modal-content p {
+  margin-top: 20px;
+  font-weight: 500;
+  color: var(--primary-green);
+}
+
+/* ============================================
+   PAGE 2: IVR SIMULATION PAGE
+   ============================================ */
+
+#ivrPage {
+  background: linear-gradient(135deg, #f0f9f0 0%, #e3f2e3 100%);
+  flex-direction: column;
+}
+
+/* Top Bar */
+.ivr-top-bar {
+  background: linear-gradient(90deg, var(--dark-green) 0%, var(--primary-green) 100%);
+  color: var(--text-light);
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ivr-info-left,
+.ivr-info-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ai-icon {
+  font-size: 28px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.ai-name {
+  font-size: 18px;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ff4444;
+}
+
+.status-indicator.online {
+  background-color: #4caf50;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Chat Container */
+.ivr-chat-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-light);
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.message {
+  display: flex;
+  gap: 10px;
+  animation: messageAppear 0.4s ease;
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message.ai {
+  justify-content: flex-start;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 60%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  word-wrap: break-word;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.message.ai .message-bubble {
+  background: linear-gradient(135deg, #a8d5ba 0%, #81c784 100%);
+  color: var(--text-dark);
+  border-bottom-left-radius: 4px;
+}
+
+.message.user .message-bubble {
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-green) 100%);
+  color: var(--text-light);
+  border-bottom-right-radius: 4px;
+}
+
+.message-time {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* Phone Container */
+.phone-container {
+  background: white;
+  padding: 25px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.phone-display {
+  width: 100%;
+  max-width: 300px;
+  background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+  border: 2px solid var(--light-green);
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Dial Pad */
+.dial-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 12px;
+  background: linear-gradient(135deg, var(--light-green) 0%, rgba(168, 213, 186, 0.7) 100%);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dial-row {
+  display: contents;
+}
+
+.dial-btn {
+  width: 60px;
+  height: 60px;
+  border: 2px solid var(--primary-green);
+  border-radius: 12px;
+  background: white;
+  color: var(--primary-green);
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dial-btn:hover {
+  background: var(--primary-green);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(45, 166, 90, 0.3);
+}
+
+.dial-btn:active {
+  transform: scale(0.98);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Control Buttons */
+.control-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-back {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+}
+
+.btn-back:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 152, 0, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  .title-glow {
+    font-size: 48px;
+  }
+
+  .introduction {
+    padding: 30px 25px;
+  }
+
+  .introduction h2 {
+    font-size: 24px;
+  }
+
+  .introduction p {
+    font-size: 14px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .modal-content {
+    margin: 20px;
+    max-width: 90%;
+  }
+
+  .ivr-chat-container {
+    padding: 15px;
+  }
+
+  .message-bubble {
+    max-width: 85%;
+  }
+
+  .dial-pad {
+    grid-template-columns: repeat(3, 50px);
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .dial-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-glow {
+    font-size: 36px;
+  }
+
+  .introduction {
+    padding: 20px 15px;
+  }
+
+  .introduction h2 {
+    font-size: 20px;
+  }
+
+  .introduction p {
+    font-size: 13px;
+  }
+
+  .ivr-top-bar {
+    padding: 10px 15px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ai-name {
+    font-size: 16px;
+  }
+
+  .dial-pad {
+    grid-template-columns: repeat(3, 45px);
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .dial-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+
+  .phone-display {
+    font-size: 16px;
+  }
 }

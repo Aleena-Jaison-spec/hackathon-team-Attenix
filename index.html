@@ -2,20 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Krishi AI - IVR Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krishi AI - Agricultural IVR System</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="phone">
-  <h2>☎ KRISHI AI - IVR DEMO</h2>
+<!-- PAGE 1: LANDING PAGE -->
+<div id="landingPage" class="page active">
+  <!-- Background Slideshow -->
+  <div class="background-slideshow" id="backgroundSlideshow"></div>
+  <div class="overlay"></div>
 
-  <div id="screen"></div>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="title-glow">Krishi</h1>
+  </header>
 
-  <div id="buttons" class="buttons"></div>
+  <!-- Main Content -->
+  <main class="landing-content">
+    <section class="introduction">
+      <h2>Welcome to Krishi AI</h2>
+      <p>
+        Krishi is an <strong>AI-powered multilingual IVR system</strong> designed for farmers who prefer voice-based guidance over smartphones. 
+        Farmers can simply call and receive <strong>real-time agricultural assistance</strong> including crop advice, weather updates, market prices, 
+        and fertilizer guidance. Our voice-based system breaks language and literacy barriers, bringing intelligent agricultural support directly through a phone call.
+      </p>
+    </section>
+
+    <!-- Buttons -->
+    <div class="button-group">
+      <button class="btn btn-primary" id="startDemoBtn">🚀 Start Demo</button>
+      <button class="btn btn-outline" id="instructionsBtn">ℹ️ Instructions</button>
+    </div>
+  </main>
+
+  <!-- Instructions Modal -->
+  <div id="instructionsModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>How Krishi AI IVR Works</h2>
+      <ul>
+        <li><strong>Interactive Demo:</strong> This is a live simulation of our IVR system.</li>
+        <li><strong>Phone Keypad:</strong> Click on dial pad numbers (0-9, *, #) to simulate a farmer pressing buttons on their phone.</li>
+        <li><strong>AI Responses:</strong> The Krishi AI bot responds intelligently to each selection.</li>
+        <li><strong>Chat Interface:</strong> Watch the conversation flow in real-time like a phone call conversation.</li>
+        <li><strong>Multiple Languages:</strong> The system supports Hindi, English, and Malayalam.</li>
+        <li><strong>Voice-Based:</strong> All responses are spoken aloud via text-to-speech (TTS) technology.</li>
+      </ul>
+      <p><strong>Ready to try?</strong> Click "Start Demo" to begin the interactive IVR simulation!</p>
+    </div>
+  </div>
 </div>
 
-<script src="data.js"></script>
+<!-- PAGE 2: IVR SIMULATION PAGE -->
+<div id="ivrPage" class="page">
+  <!-- Top Bar -->
+  <div class="ivr-top-bar">
+    <div class="ivr-info-left">
+      <div class="ai-icon">🤖</div>
+      <span class="ai-name">Krishi AI Assistant</span>
+    </div>
+    <div class="ivr-info-right">
+      <div class="status-indicator online"></div>
+      <span class="status-text">Live IVR Simulation</span>
+    </div>
+  </div>
+
+  <!-- Chat Area -->
+  <div class="ivr-chat-container">
+    <div class="chat-messages" id="chatMessages">
+      <!-- Messages will be dynamically added here -->
+    </div>
+  </div>
+
+  <!-- Phone Dial Pad -->
+  <div class="phone-container">
+    <div class="phone-display" id="phoneDisplay">Ready</div>
+    
+    <div class="dial-pad">
+      <div class="dial-row">
+        <button class="dial-btn" data-key="1">1</button>
+        <button class="dial-btn" data-key="2">2</button>
+        <button class="dial-btn" data-key="3">3</button>
+      </div>
+      <div class="dial-row">
+        <button class="dial-btn" data-key="4">4</button>
+        <button class="dial-btn" data-key="5">5</button>
+        <button class="dial-btn" data-key="6">6</button>
+      </div>
+      <div class="dial-row">
+        <button class="dial-btn" data-key="7">7</button>
+        <button class="dial-btn" data-key="8">8</button>
+        <button class="dial-btn" data-key="9">9</button>
+      </div>
+      <div class="dial-row">
+        <button class="dial-btn" data-key="*">*</button>
+        <button class="dial-btn" data-key="0">0</button>
+        <button class="dial-btn" data-key="#">#</button>
+      </div>
+    </div>
+
+    <!-- Control Buttons -->
+    <div class="control-buttons">
+      <button class="btn btn-back" id="backBtn">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>
