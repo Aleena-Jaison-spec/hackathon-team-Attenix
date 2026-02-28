@@ -259,8 +259,13 @@ function addMessage(sender, text) {
   messageDiv.appendChild(timeDiv);
   chatMessages.appendChild(messageDiv);
 
-  // Auto-scroll to bottom
-  chatMessages.scrollTop = chatMessages.scrollHeight;
+  // Auto-scroll to bottom by scrolling the parent container
+  const chatContainer = chatMessages.parentElement;
+  if (chatContainer) {
+    setTimeout(() => {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }, 0);
+  }
 }
 
 // ============================================
